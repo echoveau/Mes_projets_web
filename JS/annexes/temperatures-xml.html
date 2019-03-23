@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Ajax : XML</title>
+<style>
+table {
+	margin: auto;
+}
+
+table, tr, th, td {
+	border: black 1px solid;
+	border-collapse: collapse;
+	text-align: left;
+}
+
+th, td {
+	width: 100px;
+}
+</style>
+</head>
+<body>
+	<h1 style="text-align: center">Average temperatures for Angers</h1>
+	<table id="tableau">
+		<tr>
+			<th>Month</th>
+			<th>Average temperature</th>
+		</tr>
+	</table>
+<script>
+	var xhttp = new XMLHttpRequest();;
+	
+	xhttp.onreadystatechange = function() {
+	    if(this.readyState == 4 && this.status == 200){
+	    	
+	    	var tab = this.responseXML.querySelectorAll("month");
+	    
+	    	for(var i=0;i<tab.length;i++)
+	    	{
+	    		var div=document.getElementById('tableau');
+
+	    		
+	    		var element = document.createElement("tr");
+	    		var element_td=document.createElement("td");
+	    		var text = document.createTextNode(tab[i].getAttribute("name"));
+	    		
+	    		element_td.appendChild(text);
+	    		
+	    		element.appendChild(element_td);
+	    		
+	    		var element_td2=document.createElement("td");
+	    		var text= document.createTextNode(tab[i].getAttribute("value"));
+	    		
+	    		element_td2.appendChild(text);
+	    		
+	    		element.appendChild(element_td2);
+	    		
+	    		div.appendChild(element);
+	    	}
+	    	
+	    }
+	};
+	
+	xhttp.open("GET","temperatures.xml",true);
+	xhttp.send();
+	
+	
+	
+	//div.innerHTML += "<tr><th>Month</th><th>Average temperature</th></tr>";
+	
+</script>
+	
+	
+</body>
+</html>
